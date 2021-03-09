@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="ko" >
+<head>
+	<title>treeList</title>
+	<meta charset="utf-8">
+	<meta http-equiv="Content-Script-Type" content="text/javascript">
+	<meta http-equiv="Content-Style-Type" content="text/css">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="shortcut icon" href="http://www.mins01.com/favicon.ico">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<script src="/js/ForGoogle.js"></script>
+	<!-- google analytics -->
+	<script>ForGoogle.analytics()</script>
+
+
+	<!-- jquery 관련 -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
+
+
+	<!-- 부트스트랩 4 : IE8지원안됨! -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" crossorigin="anonymous">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" crossorigin="anonymous"></script>
+	<!-- vue.js -->
+	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+	<!-- meta og -->
+
+	<meta property="og:title" content="treeList">
+	<meta property="og:description" content="treeList">
+	<meta name="og:image" content="http://www.mins01.com/img/logo.gif">
+	<meta property="og:image:width" content="190">
+	<meta property="og:image:height" content="70" />
+	<meta property="og:site_name" content="treeList" />
+	<meta property="og:type" content="website">
+
+	<!-- //meta og -->
+
+
+	<link rel="stylesheet" href="treeList.css">
+	<link rel="stylesheet" href="treeList-theme.css">
+
+
+</head>
+<body>
+	<div class="container">
+		<h1>treeList</h1>
+		<h2>html class 사용</h2>
+		<div>
+			<a href="index.html">class-style</a>
+		</div>
+		<div>
+			<a href="treeListSimple.html">treeListSimple</a>
+		</div>
+	</div>
+	<div class="container">
+		<hr>
+		<script>
+		function form_onsubmit(f){
+			var cs = [];
+			f.querySelectorAll('.classes:checked').forEach((item, i) => {
+				cs.push(item.value)
+			});
+			document.querySelector('#div_treeList').className=cs.join(" ");
+		}
+		</script>
+		<form action="" onchange="form_onsubmit(this);return">
+			<input class="form-control mb-3 classes" type="checkbox" style="display:none" checked name="def_class" value="treeList">
+			<div class="input-group mb-3">
+				<div class="input-group-prepend">
+					<span class="input-group-text" >theme</span>
+				</div>
+				<div class="form-control">
+					<label><input type="radio" class="classes" name="theme_class" value="" checked> unset</label> ,
+					<label><input type="radio" class="classes" name="theme_class" value="treeList-theme-1"> theme-1</label> ,
+					<label><input type="radio" class="classes" name="theme_class" value="treeList-theme-2"> theme-2</label> ,
+					<label><input type="radio" class="classes" name="theme_class" value="treeList-theme-3"> theme-3</label>
+				</div>
+			</div>
+			<div class="input-group mb-3">
+				<div class="input-group-prepend">
+					<span class="input-group-text" >etc</span>
+				</div>
+				<div class="form-control">
+					<label><input type="checkbox" class="classes" name="etc_class" value="treeList-use-hover"> hover</label> ,
+					<label><input type="checkbox" class="classes" name="etc_class" value="treeList-hide-animation"> hide-animation</label>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="container">
+		<hr>
+		<div  style="border:1px solid #eee;">
+			<div class="treeList" id="div_treeList">
+				<ul class="treeList-stem">
+					<li class="treeList-branch">
+						<div class="treeList-leaf">1 <button type="button" class="btn btn-info btn-sm" onclick="this.parentNode.parentNode.classList.toggle('treeList-hidden-stem')">자식 토글</button></div>
+						<ul class="treeList-stem">
+							<li class="treeList-branch">
+								<div class="treeList-leaf">1</div>
+								<ul class="treeList-stem">
+									<li class="treeList-branch">
+										<div class="treeList-leaf">1</div>
+									</li>
+									<li class="treeList-branch">
+										<div class="treeList-leaf">2<br>2<br>2<br>2<br>2<br></div>
+									</li>
+									<li class="treeList-branch  treeList-hidden-stem">
+										<div class="treeList-leaf">3 (자식 없음)  <button type="button" class="btn btn-info btn-sm" onclick="this.parentNode.parentNode.classList.toggle('treeList-hidden-stem')">자식 토글</button></div>
+									</li>
+								</ul>
+							</li>
+							<li class="treeList-branch treeList-hidden-stem">
+								<div class="treeList-leaf">2 <button type="button" class="btn btn-info btn-sm" onclick="this.parentNode.parentNode.classList.toggle('treeList-hidden-stem')">자식 토글</button></div>
+								<ul class="treeList-stem">
+									<li class="treeList-branch">
+										<div class="treeList-leaf">1</div>
+									</li>
+									<li class="treeList-branch">
+										<div class="treeList-leaf">2<br>2<br>2<br>2<br>2<br></div>
+										<ul class="treeList-stem">
+											<li class="treeList-branch">
+												<div class="treeList-leaf">1</div>
+											</li>
+											<li class="treeList-branch">
+												<div class="treeList-leaf">2<br>2<br>2<br>2<br>2<br></div>
+												<ul class="treeList-stem">
+													<li class="treeList-branch">
+														<div class="treeList-leaf">1</div>
+													</li>
+													<li class="treeList-branch">
+														<div class="treeList-leaf">2<br>2<br>2<br>2<br>2<br></div>
+													</li>
+													<li class="treeList-branch">
+														<div class="treeList-leaf">3</div>
+													</li>
+												</ul>
+											</li>
+											<li class="treeList-branch">
+												<div class="treeList-leaf">3</div>
+											</li>
+										</ul>
+									</li>
+									<li class="treeList-branch">
+										<div class="treeList-leaf">3</div>
+									</li>
+								</ul>
+							</li>
+							<li class="treeList-branch">
+								<div class="treeList-leaf">3</div>
+								<ul class="treeList-stem">
+									<li class="treeList-branch">
+										<div class="treeList-leaf">1</div>
+									</li>
+									<li class="treeList-branch">
+										<div class="treeList-leaf">2<br>2<br>2<br>2<br>2<br></div>
+									</li>
+									<li class="treeList-branch">
+										<div class="treeList-leaf">3</div>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="treeList-branch">
+						<div class="treeList-leaf">2</div>
+					</li>
+					<li class="treeList-branch">
+						<div class="treeList-leaf">3<br>3<br>3<br>3<br></div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<footer class="container">*. 공대여자는 이쁘다.</footer>
+</body>
+</html>

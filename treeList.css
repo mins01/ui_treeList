@@ -150,7 +150,7 @@
 	border-width:2px;
 }
 
-/* 마우스 오버 강조 : 테마 후에 선언해야한다!*/
+/* 마우스 오버 강조 */
 .treeList.treeList-use-hover .treeList-leaf:hover,
 .treeList.treeList-use-hover .treeList-leaf:hover + .treeList-stem .treeList-branch::before ,
 .treeList.treeList-use-hover .treeList-leaf:hover + .treeList-stem .treeList-branch::after ,

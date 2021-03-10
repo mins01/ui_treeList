@@ -38,7 +38,13 @@
 
 	<link rel="stylesheet" href="treeList.css">
 	<link rel="stylesheet" href="treeList-theme.css">
-
+	<style>
+	/* 커스텀 부분 */
+	.treeList-stem-show-button::after{
+		cursor: pointer;
+		content: " . . . 클릭시 펼쳐집니다 . . ." !important;
+	}
+	</style>
 </head>
 <body>
 	<div class="container">
@@ -94,9 +100,9 @@
 				<ul>
 					<li>
 						<div>1 <button type="button" class="btn btn-info btn-sm" onclick="this.parentNode.parentNode.classList.toggle('treeList-hidden-stem')">자식 토글</button></div>
-						<ul>
+						<ul class="treeList-stem-show-button" onclick="this.parentNode.classList.contains('treeList-hidden-stem')?this.parentNode.classList.remove('treeList-hidden-stem'):null;">
 							<li>
-								<div>1</div>
+								<div>1 숨김시 클릭하면 보이는 UL</div>
 								<ul>
 									<li>
 										<div>1</div>

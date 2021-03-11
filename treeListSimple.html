@@ -38,13 +38,8 @@
 
 	<link rel="stylesheet" href="treeList.css">
 	<link rel="stylesheet" href="treeList-theme.css">
-	<style>
-	/* 커스텀 부분 */
-	.treeList-stem-show-button::after{
-		cursor: pointer;
-		content: " . . . 클릭시 펼쳐집니다 . . ." !important;
-	}
-	</style>
+	<script src="treeList.js"></script>
+
 </head>
 <body>
 	<div class="container">
@@ -66,9 +61,18 @@
 				cs.push(item.value)
 			});
 			document.querySelector('#div_treeList').className=cs.join(" ");
+			f.classes.value=cs.join(" ");
 		}
 		</script>
-		<form action="" onchange="form_onsubmit(this);return">
+		<script>
+		window.onload= function(){
+			form_onsubmit(document.form_conf);
+			treeList.debug = true;
+			treeList.addEvent();
+
+		}
+		</script>
+		<form name="form_conf" action="" onchange="form_onsubmit(this);return">
 			<input class="form-control mb-3 classes" type="checkbox" style="display:none" checked name="def_class" value="treeListSimple">
 			<div class="input-group mb-3">
 				<div class="input-group-prepend">
@@ -86,9 +90,18 @@
 					<span class="input-group-text" >etc</span>
 				</div>
 				<div class="form-control">
-					<label><input type="checkbox" class="classes" name="etc_class" value="treeList-use-hover"> hover</label> ,
+					<label><input type="checkbox" class="classes" name="etc_class" value="treeList-hover"> hover</label> ,
+					<label><input type="checkbox" class="classes" name="etc_class" value="treeList-hover-with-child"> hover-with-child</label> ,
 					<label><input type="checkbox" class="classes" name="etc_class" value="treeList-hide-animation"> hide-animation</label>
+					<button type="button" class="btn btn-sm btn-info" onclick="treeList.addEvent();">addEvent</button>
+					<button type="button" class="btn btn-sm btn-info" onclick="treeList.removeEvent();">removeEvent</button>
 				</div>
+			</div>
+			<div class="input-group mb-3">
+				<div class="input-group-prepend">
+					<span class="input-group-text" >className</span>
+				</div>
+				<input type="text" readonly class="form-control" name="classes">
 			</div>
 		</form>
 	</div>
@@ -99,8 +112,12 @@
 			<div class="treeListSimple" id="div_treeList">
 				<ul>
 					<li>
-						<div>1 <button type="button" class="btn btn-info btn-sm" onclick="this.parentNode.parentNode.classList.toggle('treeList-hidden-stem')">자식 토글</button></div>
-						<ul class="treeList-stem-show-button" onclick="this.parentNode.classList.contains('treeList-hidden-stem')?this.parentNode.classList.remove('treeList-hidden-stem'):null;">
+						<div>1
+							<button type="button" class="btn btn-danger btn-sm treeList-show-stem">자식 보이기</button>
+							<button type="button" class="btn btn-warning btn-sm treeList-hide-stem">자식 감추기</button>
+							<button type="button" class="btn btn-success btn-sm treeList-toggle-stem">자식 토글</button>
+						</div>
+						<ul class=" -show-button" onclick="this.parentNode.classList.contains('treeList-hidden-stem')?this.parentNode.classList.remove('treeList-hidden-stem'):null;">
 							<li>
 								<div>1 숨김시 클릭하면 보이는 UL</div>
 								<ul>
@@ -110,14 +127,14 @@
 									<li>
 										<div>2<br>2<br>2<br>2<br>2<br></div>
 									</li>
-									<li>
-										<div>3 (자식 없음)  <button type="button" class="btn btn-info btn-sm" onclick="this.parentNode.parentNode.classList.toggle('treeList-hidden-stem')">자식 토글</button></div>
+									<li class="  treeList-hidden-stem">
+										<div>3 (자식 없음)  <button type="button" class="btn btn-success btn-sm treeList-toggle-stem">자식 토글</button></div>
 									</li>
 								</ul>
 							</li>
-							<li class="treeList-hidden-stem">
-								<div>2  <button type="button" class="btn btn-info btn-sm" onclick="this.parentNode.parentNode.classList.toggle('treeList-hidden-stem')">자식 토글</button></div>
-								<ul>
+							<li class=" treeList-hidden-stem">
+								<div>2 <button type="button" class="btn btn-success btn-sm treeList-toggle-stem">자식 토글</button></div>
+								<ul >
 									<li>
 										<div>1</div>
 									</li>
@@ -171,7 +188,7 @@
 						<div>2</div>
 					</li>
 					<li>
-						<div>3</div>
+						<div>3<br>3<br>3<br>3<br></div>
 					</li>
 				</ul>
 			</div>

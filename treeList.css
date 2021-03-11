@@ -24,10 +24,8 @@
 /* leaf */
 .treeList-leaf ,
 .treeListSimple li > div {
-	border:2px solid #999;
-	border-radius: 0.3em;
+	padding: 0;
 	margin:0.2em 0.5em;
-	padding: 0.2em;
 	min-height: 2em;
 }
 /* hidden stem */
@@ -42,14 +40,19 @@
 .treeList-hidden-stem > .treeList-stem::after ,
 .treeListSimple .treeList-hidden-stem > ul::after{
 	display: block;
-	content: " . . . hidden . . .";
+	content: " . . . folded . . .";
 	border:2px solid #999;
-	/* color: #ccc; */
-	border-radius: 0.3em;
 	margin:0.2em 0.5em;
-	padding: 0.2em;
 	min-height: 2em;
 }
+.treeList-hidden-stem > .treeList-stem.treeList-show-stem::after ,
+.treeListSimple .treeList-hidden-stem > ul.treeList-show-stem::after{
+	content: " . . . folded . . .";
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+
 .treeList-branch > .treeList-stem,
 .treeListSimple div + ul{
 	opacity:1;
@@ -90,12 +93,10 @@
 .treeListSimple li::after{
 
 	height:auto;
-	/* border-width:0 0 0 2px; */
 	border-top-width:0 !important;
 	border-right-width:0 !important;
 	border-bottom-width:0 !important;
-	/* border-left-width:0 !important; */
-	top:-0.2em; /* margin-top of leaf */
+	top:-0.2em;
 	bottom:0em;
 
 }
@@ -103,14 +104,10 @@
 .treeListSimple li::before ,
 .treeList-hidden-stem > .treeList-stem::before ,
 .treeListSimple .treeList-hidden-stem > ul::before{
-	margin-top:0.2em; /* margin-top of leaf */
+	margin-top:0.2em;
 	height: 1em;
-	/* border-width:0 0 2px 2px; */
 	border-top-width:0 !important;
 	border-right-width:0 !important;
-	/* border-bottom-width:0 !important; */
-	/* border-left-width:0 !important; */
-	/* border-left-style:none; */
 }
 .treeList-hidden-stem > .treeList-stem::before ,
 .treeListSimple .treeList-hidden-stem > ul::before{
@@ -134,6 +131,26 @@
 	display: none;
 }
 
+
+/* .treeList-leaf 플렉스 구조 */
+
+.treeList-leaf-flex{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: flex-end;
+	align-items: baseline;
+}
+.treeList-leaf-flex > *{
+	margin:0.1em;
+}
+.treeList-leaf-flex-text{
+	flex:1 1 auto;
+}
+.treeList-leaf-flex-text.ellipsis{
+	white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
 /* 기본 선 설정 */
 .treeList .treeList-leaf ,
 .treeListSimple li > div,
@@ -150,23 +167,46 @@
 	border-width:2px;
 }
 
-/* 마우스 오버 강조 */
-.treeList.treeList-use-hover .treeList-leaf:hover,
-.treeList.treeList-use-hover .treeList-leaf:hover + .treeList-stem .treeList-branch::before ,
-.treeList.treeList-use-hover .treeList-leaf:hover + .treeList-stem .treeList-branch::after ,
-.treeList.treeList-use-hover .treeList-leaf:hover + .treeList-stem .treeList-leaf ,
-.treeListSimple.treeList-use-hover li > div:hover,
-.treeListSimple.treeList-use-hover li > div:hover + ul li::before ,
-.treeListSimple.treeList-use-hover li > div:hover + ul li::after,
-.treeListSimple.treeList-use-hover li > div:hover + ul li > div,
-.treeList.treeList-use-hover .treeList-leaf:hover + .treeList-stem .treeList-hidden-stem .treeList-stem::before ,
-.treeList.treeList-use-hover .treeList-leaf:hover + .treeList-stem .treeList-hidden-stem .treeList-stem::after ,
-.treeList.treeList-use-hover .treeList-hidden-stem > .treeList-leaf:hover + .treeList-stem::before ,
-.treeList.treeList-use-hover .treeList-hidden-stem > .treeList-leaf:hover + .treeList-stem::after ,
-.treeListSimple.treeList-use-hover div:hover + ul .treeList-hidden-stem ul::before ,
-.treeListSimple.treeList-use-hover div:hover + ul .treeList-hidden-stem ul::after,
-.treeListSimple.treeList-use-hover .treeList-hidden-stem > div:hover + ul::before ,
-.treeListSimple.treeList-use-hover .treeList-hidden-stem > div:hover + ul::after{
+
+/* theme-0 */
+/* box */
+.treeList.treeList-theme-0 .treeList-leaf,
+.treeListSimple.treeList-theme-0 li > div,
+.treeList.treeList-theme-0 .treeList-hidden-stem .treeList-stem::after ,
+.treeListSimple.treeList-theme-0 .treeList-hidden-stem ul::after {
+	border:2px solid #999;
+	border-radius: 0.3em;
+	padding: 2px;
+}
+
+/* hover */
+.treeList.treeList-hover.treeList-theme-0 .treeList-leaf:hover,
+.treeListSimple.treeList-hover.treeList-theme-0 li > div:hover,
+.treeList.treeList-hover.treeList-theme-0 .treeList-hidden-stem .treeList-stem:hover::after ,
+.treeListSimple.treeList-hover.treeList-theme-0 .treeList-hidden-stem ul:hover::after
+{
 	border-color: #e99;
-	/* filter: contrast(1.1) brightness(1.2); */
+	background-color: #fee;
+}
+
+
+/* hover-with-child */
+.treeList.treeList-hover-with-child.treeList-theme-0 .treeList-leaf:hover,
+.treeList.treeList-hover-with-child.treeList-theme-0 .treeList-leaf:hover + .treeList-stem .treeList-branch::before ,
+.treeList.treeList-hover-with-child.treeList-theme-0 .treeList-leaf:hover + .treeList-stem .treeList-branch::after ,
+.treeList.treeList-hover-with-child.treeList-theme-0 .treeList-leaf:hover + .treeList-stem .treeList-leaf ,
+.treeListSimple.treeList-hover-with-child.treeList-theme-0 li > div:hover,
+.treeListSimple.treeList-hover-with-child.treeList-theme-0 li > div:hover + ul li::before ,
+.treeListSimple.treeList-hover-with-child.treeList-theme-0 li > div:hover + ul li::after,
+.treeListSimple.treeList-hover-with-child.treeList-theme-0 li > div:hover + ul li > div,
+.treeList.treeList-hover-with-child.treeList-theme-0 .treeList-leaf:hover + .treeList-stem .treeList-hidden-stem .treeList-stem::before ,
+.treeList.treeList-hover-with-child.treeList-theme-0 .treeList-leaf:hover + .treeList-stem .treeList-hidden-stem .treeList-stem::after ,
+.treeList.treeList-hover-with-child.treeList-theme-0 .treeList-hidden-stem > .treeList-leaf:hover + .treeList-stem::before ,
+.treeList.treeList-hover-with-child.treeList-theme-0 .treeList-hidden-stem > .treeList-leaf:hover + .treeList-stem::after ,
+.treeListSimple.treeList-hover-with-child.treeList-theme-0 div:hover + ul .treeList-hidden-stem ul::before ,
+.treeListSimple.treeList-hover-with-child.treeList-theme-0 div:hover + ul .treeList-hidden-stem ul::after,
+.treeListSimple.treeList-hover-with-child.treeList-theme-0 .treeList-hidden-stem > div:hover + ul::before ,
+.treeListSimple.treeList-hover-with-child.treeList-theme-0 .treeList-hidden-stem > div:hover + ul::after{
+	border-color: #e99;
+	background-color: #fee;
 }

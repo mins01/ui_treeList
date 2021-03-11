@@ -41,13 +41,7 @@
 
 	<link rel="stylesheet" href="treeList.css">
 	<link rel="stylesheet" href="treeList-theme.css">
-	<style>
-	/* 커스텀 부분 */
-	.treeList-stem-show-button::after{
-		cursor: pointer;
-		content: " . . . 클릭시 펼쳐집니다 . . ." !important;
-	}
-	</style>
+	<script src="treeList.js"></script>
 
 </head>
 <body>
@@ -70,9 +64,18 @@
 				cs.push(item.value)
 			});
 			document.querySelector('#div_treeList').className=cs.join(" ");
+			f.classes.value=cs.join(" ");
 		}
 		</script>
-		<form action="" onchange="form_onsubmit(this);return">
+		<script>
+		window.onload= function(){
+			form_onsubmit(document.form_conf);
+			treeList.debug = true;
+			treeList.addEvent();
+
+		}
+		</script>
+		<form name="form_conf" action="" onchange="form_onsubmit(this);return">
 			<input class="form-control mb-3 classes" type="checkbox" style="display:none" checked name="def_class" value="treeList">
 			<div class="input-group mb-3">
 				<div class="input-group-prepend">
@@ -80,6 +83,7 @@
 				</div>
 				<div class="form-control">
 					<label><input type="radio" class="classes" name="theme_class" value="" checked> unset</label> ,
+					<label><input type="radio" class="classes" name="theme_class" value="treeList-theme-0"> theme-0</label> ,
 					<label><input type="radio" class="classes" name="theme_class" value="treeList-theme-1"> theme-1</label> ,
 					<label><input type="radio" class="classes" name="theme_class" value="treeList-theme-2"> theme-2</label> ,
 					<label><input type="radio" class="classes" name="theme_class" value="treeList-theme-3"> theme-3</label>
@@ -90,9 +94,18 @@
 					<span class="input-group-text" >etc</span>
 				</div>
 				<div class="form-control">
-					<label><input type="checkbox" class="classes" name="etc_class" value="treeList-use-hover"> hover</label> ,
+					<label><input type="checkbox" class="classes" name="etc_class" value="treeList-hover"> hover</label> ,
+					<label><input type="checkbox" class="classes" name="etc_class" value="treeList-hover-with-child"> hover-with-child</label> ,
 					<label><input type="checkbox" class="classes" name="etc_class" value="treeList-hide-animation"> hide-animation</label>
+					<button type="button" class="btn btn-sm btn-info" onclick="treeList.addEvent();">addEvent</button>
+					<button type="button" class="btn btn-sm btn-info" onclick="treeList.removeEvent();">removeEvent</button>
 				</div>
+			</div>
+			<div class="input-group mb-3">
+				<div class="input-group-prepend">
+					<span class="input-group-text" >className</span>
+				</div>
+				<input type="text" readonly class="form-control" name="classes">
 			</div>
 		</form>
 	</div>
@@ -102,10 +115,18 @@
 			<div class="treeList" id="div_treeList">
 				<ul class="treeList-stem">
 					<li class="treeList-branch">
-						<div class="treeList-leaf">1 <button type="button" class="btn btn-info btn-sm" onclick="this.parentNode.parentNode.classList.toggle('treeList-hidden-stem')">자식 토글</button></div>
-						<ul class="treeList-stem treeList-stem-show-button" onclick="this.parentNode.classList.contains('treeList-hidden-stem')?this.parentNode.classList.remove('treeList-hidden-stem'):null;">
+						<div class="treeList-leaf treeList-leaf-flex">
+							<div class="treeList-leaf-flex-text ellipsis">treeList-leaf-flex , treeList-leaf-flex-text 적용</div>
+							<button type="button" class="btn btn-danger btn-sm treeList-show-stem">자식 보이기</button>
+							<button type="button" class="btn btn-warning btn-sm treeList-hide-stem">자식 감추기</button>
+							<button type="button" class="btn btn-success btn-sm treeList-toggle-stem">자식 토글</button>
+						</div>
+						<ul class="treeList-stem treeList-show-stem">
 							<li class="treeList-branch">
-								<div class="treeList-leaf">1 숨김시 클릭하면 보이는 UL</div>
+								<div class="treeList-leaf treeList-leaf-flex">
+									<button type="button" class="btn btn-warning btn-sm treeList-hide-parent-stem">부모 자식 감추기</button>
+									<div class="treeList-leaf-flex-text ellipsis">treeList-leaf-flex , treeList-leaf-flex-text 적용</div>
+								</div>
 								<ul class="treeList-stem">
 									<li class="treeList-branch">
 										<div class="treeList-leaf">1</div>
@@ -114,12 +135,12 @@
 										<div class="treeList-leaf">2<br>2<br>2<br>2<br>2<br></div>
 									</li>
 									<li class="treeList-branch  treeList-hidden-stem">
-										<div class="treeList-leaf">3 (자식 없음)  <button type="button" class="btn btn-info btn-sm" onclick="this.parentNode.parentNode.classList.toggle('treeList-hidden-stem')">자식 토글</button></div>
+										<div class="treeList-leaf">3 (자식 없음)  <button type="button" class="btn btn-success btn-sm treeList-toggle-stem">자식 토글</button></div>
 									</li>
 								</ul>
 							</li>
 							<li class="treeList-branch treeList-hidden-stem">
-								<div class="treeList-leaf">2 <button type="button" class="btn btn-info btn-sm" onclick="this.parentNode.parentNode.classList.toggle('treeList-hidden-stem')">자식 토글</button></div>
+								<div class="treeList-leaf">2 <button type="button" class="btn btn-success btn-sm treeList-toggle-stem">자식 토글</button></div>
 								<ul class="treeList-stem" >
 									<li class="treeList-branch">
 										<div class="treeList-leaf">1</div>

@@ -67,6 +67,29 @@
 	transition: opacity 0.5s ease-out;
 }
 
+/* action class */
+div.treeList-hide-stem,
+.treeList-hidden-stem div.treeList-show-stem,
+div.treeList-toggle-stem,
+div.treeList-hide-parent-stem,
+.treeList-hidden-stem div.treeList-show-parent-stem,
+div.treeList-toggle-parent-stem,
+ul.treeList-hide-stem,
+.treeList-hidden-stem ul.treeList-show-stem,
+ul.treeList-toggle-stem,
+ul.treeList-hide-parent-stem,
+.treeList-hidden-stem ul.treeList-show-parent-stem,
+ul.treeList-toggle-parent-stem,
+li.treeList-hide-stem,
+.treeList-hidden-stem li.treeList-show-stem,
+li.treeList-toggle-stem,
+li.treeList-hide-parent-stem,
+.treeList-hidden-stem li.treeList-show-parent-stem,
+li.treeList-toggle-parent-stem
+{
+	cursor: pointer;
+}
+
 
 
 /* line */

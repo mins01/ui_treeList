@@ -80,6 +80,7 @@
 				</div>
 				<div class="form-control">
 					<label><input type="radio" class="classes" name="theme_class" value="" checked> unset</label> ,
+					<label><input type="radio" class="classes" name="theme_class" value="treeList-theme-0"> theme-0</label> ,
 					<label><input type="radio" class="classes" name="theme_class" value="treeList-theme-1"> theme-1</label> ,
 					<label><input type="radio" class="classes" name="theme_class" value="treeList-theme-2"> theme-2</label> ,
 					<label><input type="radio" class="classes" name="theme_class" value="treeList-theme-3"> theme-3</label>
@@ -109,17 +110,21 @@
 	<div class="container">
 		<hr>
 		<div  style="border:1px solid #eee;">
-			<div class="treeListSimple" id="div_treeList">
+			<div class="treeList" id="div_treeList">
 				<ul>
 					<li>
-						<div>1
+						<div class="treeList-leaf-flex">
+							<div class="treeList-leaf-flex-text ellipsis">treeList-leaf-flex , treeList-leaf-flex-text 적용</div>
 							<button type="button" class="btn btn-danger btn-sm treeList-show-stem">자식 보이기</button>
 							<button type="button" class="btn btn-warning btn-sm treeList-hide-stem">자식 감추기</button>
 							<button type="button" class="btn btn-success btn-sm treeList-toggle-stem">자식 토글</button>
 						</div>
-						<ul class=" -show-button" onclick="this.parentNode.classList.contains('treeList-hidden-stem')?this.parentNode.classList.remove('treeList-hidden-stem'):null;">
+						<ul class="treeList-show-stem">
 							<li>
-								<div>1 숨김시 클릭하면 보이는 UL</div>
+								<div class="treeList-leaf-flex">
+									<button type="button" class="btn btn-warning btn-sm treeList-hide-parent-stem">부모 자식 감추기</button>
+									<div class="treeList-leaf-flex-text ellipsis">treeList-leaf-flex , treeList-leaf-flex-text 적용</div>
+								</div>
 								<ul>
 									<li>
 										<div>1</div>
@@ -127,16 +132,16 @@
 									<li>
 										<div>2<br>2<br>2<br>2<br>2<br></div>
 									</li>
-									<li class="  treeList-hidden-stem">
-										<div>3 (자식 없음)  <button type="button" class="btn btn-success btn-sm treeList-toggle-stem">자식 토글</button></div>
+									<li class="treeList-hidden-stem">
+										<div>3</div>
 									</li>
 								</ul>
 							</li>
-							<li class=" treeList-hidden-stem">
-								<div>2 <button type="button" class="btn btn-success btn-sm treeList-toggle-stem">자식 토글</button></div>
-								<ul >
+							<li class="treeList-hidden-stem">
+								<div class="treeList-toggle-stem">자식 토글</div>
+								<ul class="treeList-show-stem" >
 									<li>
-										<div>1</div>
+										<div class="treeList-hide-parent-stem">부모의 자식 감추기</div>
 									</li>
 									<li>
 										<div>2<br>2<br>2<br>2<br>2<br></div>

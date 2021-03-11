@@ -90,6 +90,16 @@ li.treeList-toggle-parent-stem
 	cursor: pointer;
 }
 
+/* icon */
+.treeList-toggle-stem-icon{
+	cursor: pointer;
+}
+.treeList-toggle-stem-icon::before{
+	content:"📂"
+}
+.treeList-hidden-stem .treeList-toggle-stem-icon::before{
+	content:"📁"
+}
 
 
 /* line */

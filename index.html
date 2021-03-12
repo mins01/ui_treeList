@@ -42,7 +42,67 @@
 	<link rel="stylesheet" href="treeList.css">
 	<link rel="stylesheet" href="treeList-theme.css">
 	<script src="treeList.js"></script>
+	<script>
+	var dragNode;
+	document.addEventListener("dragstart", function(evt) {
+		// 드래그한 요소에 대한 참조 변수
+		dragNode = evt.target;
+		dragNode.classList.add('treeList-leaf-dragging')
+		document.body.classList.add('treeList-body-dragging')
+	}, false);
+	document.addEventListener("dragend", function(evt) {
+		// 드래그한 요소에 대한 참조 변수
+		if(!dragNode){return;}
+		dragNode.classList.remove('treeList-leaf-dragging')
+		document.body.classList.remove('treeList-body-dragging')
+		dragNode = null;
+	}, false);
+	document.addEventListener("dragover", function(evt) {
+		// 드롭을 허용하도록 prevetDefault() 호출
+		// if (!evt.target.closest('.treeList-leaf')) {return;}
+		if(dragNode)  evt.preventDefault();
 
+	}, false);
+
+	document.addEventListener("dragenter", function(evt) {
+		// 요소를 드롭하려는 대상 위로 드래그했을 때 대상의 배경색 변경
+		if(!dragNode){return;}
+		if (!evt.target.classList.contains('treeList-leaf')) {return;}
+		evt.target.classList.add('treeList-leaf-dropzone')
+	}, false);
+	document.addEventListener("dragleave", function(evt) {
+		// 요소를 드래그하여 드롭하려던 대상으로부터 벗어났을 때 배경색 리셋
+		if(!dragNode){return;}
+		if (!evt.target.classList.contains('treeList-leaf')) {return;}
+		evt.target.classList.remove('treeList-leaf-dropzone')
+	}, false);
+
+	document.addEventListener("drop", function(evt) {
+		// 기본 액션을 막음 (링크 열기같은 것들)
+		if(!dragNode){return;}
+		if (!evt.target.classList.contains('treeList-leaf')) {return ;}
+		evt.preventDefault();
+		// 드래그한 요소를 드롭 대상으로 이동
+		dragNode.classList.remove('treeList-leaf-dragging')
+		document.body.classList.remove('treeList-body-dragging')
+		evt.target.classList.remove('treeList-leaf-dropzone')
+		// dragged.parentNode.removeChild( dragged );
+		// evt.target.appendChild( dragged );
+		if(evt.target === dragNode){
+			console.log('fail : not move to same node');
+			return false;
+		}
+		let dragNodeBranch = dragNode.closest('.treeList-branch')
+		let targetNodeBranch = evt.target.closest('.treeList-branch')
+		if(dragNodeBranch.contains(targetNodeBranch)){
+			console.log('fail : not move to child node');
+			return false;
+		}
+		targetNodeBranch.parentNode.insertBefore(dragNodeBranch, targetNodeBranch.nextSibling)
+		dragNode = null;
+
+	}, false);
+	</script>
 </head>
 <body>
 	<div class="container">
@@ -135,7 +195,7 @@
 										<div class="treeList-leaf">2<br>2<br>2<br>2<br>2<br></div>
 									</li>
 									<li class="treeList-branch  treeList-hidden-stem">
-										<div class="treeList-leaf">3</div>
+										<div class="treeList-leaf" draggable="true" ondragstart="event.dataTransfer.setData('text/plain',null)">dragable</div>
 									</li>
 								</ul>
 							</li>
@@ -176,7 +236,7 @@
 								</ul>
 							</li>
 							<li class="treeList-branch">
-								<div class="treeList-leaf treeList-leaf-flex">
+								<div class="treeList-leaf treeList-leaf-flex"  draggable="true" >
 									<!-- <button type="button" class="btn btn-success btn-sm treeList-toggle-stem treeList-toggle-stem-icon"></button> -->
 
 									<div class="treeList-leaf-flex-text"><span class="treeList-toggle-stem treeList-toggle-stem-icon"></span> treeList-leaf-flex , treeList-leaf-flex-text 적용</div>

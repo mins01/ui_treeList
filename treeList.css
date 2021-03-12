@@ -90,6 +90,20 @@ li.treeList-toggle-parent-stem
 	cursor: pointer;
 }
 
+/* drag */
+.treeList-body-dragging .treeList-leaf > *{
+	pointer-events: none;
+}
+.treeList-leaf[draggable="true"]{
+	cursor: move;
+}
+.treeList-leaf-dragging{
+	opacity: 0.5;
+}
+.treeList-leaf-dropzone{
+	opacity: 0.5;
+}
+
 /* icon */
 .treeList-toggle-stem-icon{
 	cursor: pointer;

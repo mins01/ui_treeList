@@ -1,0 +1,14 @@
+.btn.treeList-toggle-stem ,
+.btn.dropzone-add-child{
+  min-width:2em; overflow: hidden; padding: 0; margin: 0;
+}
+.treeList-hidden-stem > .treeList-leaf > .btn.treeList-toggle-stem{ border-color: #000;}
+.treeList-hidden-stem > .treeList-stem{ display: none; }
+.treeList-branch[data-count-child="0"] > .treeList-stem{ display: none; }
+.treeList-branch[data-count-child="0"] > .treeList-leaf > .data-count-child-0-hidden{ display: none; }
+.data-count-child-0-shown{display: none;}
+.treeList-branch[data-count-child="0"] > .treeList-leaf > .data-count-child-0-shown{display: inline-block;}
+
+.dnd-dropzone.dnd-dropzone-dragenter:not(.dnd-draggable-dragging){
+  background-color: #f99;
+}

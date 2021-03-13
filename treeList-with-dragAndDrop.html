@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="ko" >
+<head>
+	<title>treeList treeList-with-dragAndDrop</title>
+	<meta charset="utf-8">
+	<meta http-equiv="Content-Script-Type" content="text/javascript">
+	<meta http-equiv="Content-Style-Type" content="text/css">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="shortcut icon" href="http://www.mins01.com/favicon.ico">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<script src="/js/ForGoogle.js"></script>
+	<!-- google analytics -->
+	<script>ForGoogle.analytics()</script>
+
+
+	<!-- jquery 관련 -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
+
+
+	<!-- 부트스트랩 4 : IE8지원안됨! -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" crossorigin="anonymous">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" crossorigin="anonymous"></script>
+	<!-- vue.js -->
+	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+	<!-- meta og -->
+
+	<meta property="og:title" content="treeList">
+	<meta property="og:description" content="treeList">
+	<meta name="og:image" content="http://www.mins01.com/img/logo.gif">
+	<meta property="og:image:width" content="190">
+	<meta property="og:image:height" content="70" />
+	<meta property="og:site_name" content="treeList" />
+	<meta property="og:type" content="website">
+
+	<!-- //meta og -->
+
+
+	<link rel="stylesheet" href="treeList.css">
+	<link rel="stylesheet" href="treeList-theme.css">
+	<script src="treeList.js"></script>
+	<script src="ui_dragAndDrop/dragAndDrop.js"></script>
+	<link rel="stylesheet" href="ui_dragAndDrop/dragAndDrop.css">
+	<link rel="stylesheet" href="treeList-with-dragAndDrop.css">
+
+
+	<script>
+	dragAndDrop.ondrop = function(evt,dropzone,dragNode,dropNode){
+
+		if(dragNode===dropNode){return;}
+		console.log(evt,dropzone,dragNode,dropNode);
+		//-- 앞에 위치, 뒤에 위치
+		let mask = dragNode.compareDocumentPosition(dropNode)
+		// console.log(mask);
+		if(mask & Node.DOCUMENT_POSITION_CONTAINED_BY){
+			console.log("dropNode의 위치가 dragNode의 자식 노드");
+			return false;
+		}
+		console.log(evt,dropzone,dragNode,dropNode);
+		let p = dragNode.parentNode.closest('.treeList-branch');
+		if(dropzone.classList.contains('dropzone-add-child')){ //자식으로 추가
+			let child_ul = dropNode.querySelector(".treeList-stem").append(dragNode)
+		}else{
+			//-- 서로 바꾸기
+			dropNode.insertAdjacentElement('afterend',dragNode); //뒤로 이동
+
+		}
+		if(p){
+			console.log(p.querySelectorAll(":scope > .treeList-stem > .treeList-branch").length);
+			p.dataset.countChild = p.querySelectorAll(":scope > .treeList-stem > .treeList-branch").length;
+		}
+		dragNode.dataset.countChild = dragNode.querySelectorAll(":scope > .treeList-stem > .treeList-branch").length;
+		dropNode.dataset.countChild = dropNode.querySelectorAll(":scope > .treeList-stem > .treeList-branch").length;
+
+		return true;
+	}
+	window.onload = function(evt){
+		treeList.debug = true;
+		treeList.addEvent();
+		dragAndDrop.debug = true;
+		dragAndDrop.dropEffect = "move";
+		dragAndDrop.enable();
+	}
+	</script>
+
+</head>
+<body>
+  <header class="container">
+    <h1>treeList treeList-with-dragAndDrop</h1>
+    <h2>dragAndDrop 적용 샘플</h2>
+		<ul class="list-group">
+			<li class="list-group-item"><a target="_blank" href="https://github.com/mins01/ui_treeList">https://github.com/mins01/ui_treeList</a></li>
+			<li class="list-group-item"><a target="_blank" href="https://github.com/mins01/ui_dragAndDrop/">https://github.com/mins01/ui_dragAndDrop/</a></li>
+		</ul>
+  </header>
+	<section class="container">
+		<hr />
+		<div class="treeList treeList-theme-0 dnd-drop-animation">
+			<ul class="treeList-stem">
+				<li class="treeList-branch  dnd-node dnd-draggable" draggable="true" data-count-child="1">
+					<div class="treeList-leaf treeList-leaf-flex">
+						<button type="button" class="btn btn-success btn-sm treeList-toggle-stem dnd-dropzone dropzone-add-child data-count-child-0-hidden"><span class="treeList-toggle-stem-icon"></span></button>
+						<button type="button" class="btn btn-warning btn-sm dnd-dropzone dropzone-add-child  data-count-child-0-shown" disabled>+</button>
+						<div class="treeList-leaf-flex-text ellipsis  dnd-dropzone"><a href="#메뉴1">메뉴1</a></div>
+					</div>
+					<ul class="treeList-stem">
+						<li class="treeList-branch  dnd-node dnd-draggable" draggable="true" data-count-child="3">
+							<div class="treeList-leaf treeList-leaf-flex">
+								<button type="button" class="btn btn-success btn-sm treeList-toggle-stem dnd-dropzone dropzone-add-child data-count-child-0-hidden"><span class="treeList-toggle-stem-icon"></span></button>
+								<button type="button" class="btn btn-warning btn-sm dnd-dropzone dropzone-add-child  data-count-child-0-shown" disabled>+</button>
+								<div class="treeList-leaf-flex-text ellipsis  dnd-dropzone"><a href="#메뉴1-1">메뉴1-1</a></div>
+							</div>
+							<ul class="treeList-stem">
+								<li class="treeList-branch  dnd-node dnd-draggable" draggable="true" data-count-child="0">
+									<div class="treeList-leaf treeList-leaf-flex">
+										<button type="button" class="btn btn-success btn-sm treeList-toggle-stem dnd-dropzone dropzone-add-child data-count-child-0-hidden"><span class="treeList-toggle-stem-icon"></span></button>
+										<button type="button" class="btn btn-warning btn-sm dnd-dropzone dropzone-add-child  data-count-child-0-shown" disabled>+</button>
+										<div class="treeList-leaf-flex-text ellipsis  dnd-dropzone"><a href="#메뉴1-1-1">메뉴1-1-1</a></div>
+									</div>
+									<ul class="treeList-stem"></ul>
+								</li>
+								<li class="treeList-branch  dnd-node dnd-draggable" draggable="true" data-count-child="0">
+									<div class="treeList-leaf treeList-leaf-flex">
+										<button type="button" class="btn btn-success btn-sm treeList-toggle-stem dnd-dropzone dropzone-add-child data-count-child-0-hidden"><span class="treeList-toggle-stem-icon"></span></button>
+										<button type="button" class="btn btn-warning btn-sm dnd-dropzone dropzone-add-child  data-count-child-0-shown" disabled>+</button>
+										<div class="treeList-leaf-flex-text ellipsis  dnd-dropzone"><a href="#메뉴1-1-2">메뉴1-1-2</a></div>
+									</div>
+									<ul class="treeList-stem"></ul>
+								</li>
+								<li class="treeList-branch  dnd-node dnd-draggable"  draggable="true" data-count-child="0">
+									<div class="treeList-leaf treeList-leaf-flex">
+										<button type="button" class="btn btn-success btn-sm treeList-toggle-stem dnd-dropzone dropzone-add-child data-count-child-0-hidden"><span class="treeList-toggle-stem-icon"></span></button>
+										<button type="button" class="btn btn-warning btn-sm dnd-dropzone dropzone-add-child  data-count-child-0-shown" disabled>+</button>
+										<div class="treeList-leaf-flex-text ellipsis  dnd-dropzone"><a href="#메뉴1-1-3">메뉴1-1-3</a></div>
+									</div>
+									<ul class="treeList-stem"></ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+				<li class="treeList-branch  dnd-node dnd-draggable" draggable="true" data-count-child="1">
+					<div class="treeList-leaf treeList-leaf-flex">
+						<button type="button" class="btn btn-success btn-sm treeList-toggle-stem dnd-dropzone dropzone-add-child data-count-child-0-hidden"><span class="treeList-toggle-stem-icon"></span></button>
+						<button type="button" class="btn btn-warning btn-sm dnd-dropzone dropzone-add-child  data-count-child-0-shown" disabled>+</button>
+						<div class="treeList-leaf-flex-text ellipsis  dnd-dropzone"><a href="#메뉴2">메뉴2</a></div>
+					</div>
+					<ul class="treeList-stem">
+						<li class="treeList-branch  dnd-node dnd-draggable" draggable="true" data-count-child="3">
+							<div class="treeList-leaf treeList-leaf-flex">
+								<button type="button" class="btn btn-success btn-sm treeList-toggle-stem dnd-dropzone dropzone-add-child data-count-child-0-hidden"><span class="treeList-toggle-stem-icon"></span></button>
+								<button type="button" class="btn btn-warning btn-sm dnd-dropzone dropzone-add-child  data-count-child-0-shown" disabled>+</button>
+								<div class="treeList-leaf-flex-text ellipsis  dnd-dropzone"><a href="#메뉴2-1">메뉴2-1</a></div>
+							</div>
+							<ul class="treeList-stem">
+								<li class="treeList-branch  dnd-node dnd-draggable" draggable="true" data-count-child="0">
+									<div class="treeList-leaf treeList-leaf-flex">
+										<button type="button" class="btn btn-success btn-sm treeList-toggle-stem dnd-dropzone dropzone-add-child data-count-child-0-hidden"><span class="treeList-toggle-stem-icon"></span></button>
+										<button type="button" class="btn btn-warning btn-sm dnd-dropzone dropzone-add-child  data-count-child-0-shown" disabled>+</button>
+										<div class="treeList-leaf-flex-text ellipsis  dnd-dropzone"><a href="#메뉴2-1-1">메뉴2-1-1</a></div>
+									</div>
+									<ul class="treeList-stem"></ul>
+								</li>
+								<li class="treeList-branch  dnd-node dnd-draggable" draggable="true" data-count-child="0">
+									<div class="treeList-leaf treeList-leaf-flex">
+										<button type="button" class="btn btn-success btn-sm treeList-toggle-stem dnd-dropzone dropzone-add-child data-count-child-0-hidden"><span class="treeList-toggle-stem-icon"></span></button>
+										<button type="button" class="btn btn-warning btn-sm dnd-dropzone dropzone-add-child  data-count-child-0-shown" disabled>+</button>
+										<div class="treeList-leaf-flex-text ellipsis  dnd-dropzone"><a href="#메뉴2-1-2">메뉴2-1-2</a></div>
+									</div>
+									<ul class="treeList-stem"></ul>
+								</li>
+								<li class="treeList-branch  dnd-node dnd-draggable"  draggable="true" data-count-child="0">
+									<div class="treeList-leaf treeList-leaf-flex">
+										<button type="button" class="btn btn-success btn-sm treeList-toggle-stem dnd-dropzone dropzone-add-child data-count-child-0-hidden"><span class="treeList-toggle-stem-icon"></span></button>
+										<button type="button" class="btn btn-warning btn-sm dnd-dropzone dropzone-add-child  data-count-child-0-shown" disabled>+</button>
+										<div class="treeList-leaf-flex-text ellipsis  dnd-dropzone"><a href="#메뉴2-1-3">메뉴2-1-3</a></div>
+									</div>
+									<ul class="treeList-stem"></ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</section>
+  <footer class="container">*. 공대여자는 이쁘다.</footer>
+</body>
+</html>

@@ -190,6 +190,7 @@ li.treeList-toggle-parent-stem
 }
 .treeList-leaf-flex > *{
 	margin:0.1em;
+	flex: 0 0 10px;
 }
 .treeList-leaf-flex-text{
 	flex:1 1 auto;

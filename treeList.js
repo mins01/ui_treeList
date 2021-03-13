@@ -1,6 +1,9 @@
 var treeList = (function treeList(){
 	let onclick = function(evt){
-		let target = evt.target;
+		let target = evt.target.closest('.treeList-show-stem , .treeList-hide-stem , .treeList-toggle-stem , .treeList-show-parent-stem , .treeList-hide-parent-stem , .treeList-toggle-parent-stem');
+		if(!target){
+			return;
+		}
 		if(target.classList.contains('treeList-show-stem')){
 			let node = target.closest('.treeList .treeList-branch , .treeListSimple li'); if(!node){ return; }
 			treeList.show(node);
